@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+
+	<include file="$(find kugle_bringup)/launch/minimal.launch" />
+	<include file="$(find kugle_launch)/launch/joystick.launch" />
+
+</launch>

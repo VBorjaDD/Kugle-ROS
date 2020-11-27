@@ -81,7 +81,6 @@ class Socket : public SocketBase {
     if (controller_port.is_open()) {
       return;
     }
-
     controller_port.open(com_port_name);
 
     boost::asio::async_read(

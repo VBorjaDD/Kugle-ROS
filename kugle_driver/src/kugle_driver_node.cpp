@@ -1970,6 +1970,7 @@ void LSPC_ConnectionThread(boost::shared_ptr<ros::NodeHandle> n, std::string ser
         *lspcObj = new lspc::Socket; // recreate a new LSPC object
         while (!(*lspcObj)->isOpen() && ros::ok()) {
             try {
+                std::cout << "cout in driver node";
                 ROS_DEBUG("Trying to connect to Kugle");
                 (*lspcObj)->open("/dev/kugle");
             }

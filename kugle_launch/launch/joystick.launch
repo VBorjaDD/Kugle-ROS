@@ -14,6 +14,7 @@
 	<node name="ps4_joy" pkg="joy" type="joy_node" respawn="true">
 	    	<param name="dev" type="string" value="/dev/input/js0" />
     		<param name="deadzone" value="0.12" />
+                <param name="autorepeat_rate" value="10" />
  	</node>
 
 	<node name="joystick_mapper" pkg="kugle_misc" type="joystick_mapper_node" respawn="true" output="screen">
@@ -23,16 +24,17 @@
 
     		<param name="angle_mode" type="bool" value="false" /> <!-- Start in angle mode (true) or velocity mode (false) -->
 
-    		<param name="maximum_linear_velocity" type="double" value="0.5" />
-    		<param name="rate_limit_linear_velocity" type="double" value="1.0" />
+    		<param name="maximum_linear_velocity" type="double" value="0.7" /> <!-- 0.28-->
+    		<param name="rate_limit_linear_velocity" type="double" value="0.4" />
 
-    		<param name="maximum_angular_velocity" type="double" value="1.0" />
-    		<param name="rate_limit_angular_velocity" type="double" value="10.0" />
+    		<param name="maximum_angular_velocity" type="double" value="0.9" /> <!-- 0.4 -->
+    		<param name="rate_limit_angular_velocity" type="double" value="3" />
 
-    		<param name="maximum_angle_degree" type="double" value="3" />
-    		<param name="rate_limit_angle_degree" type="double" value="20" />
+    		<param name="maximum_angle_degree" type="double" value="5" />
+    		<param name="rate_limit_angle_degree" type="double" value="10" />
 
 		<param name="publish_rate" type="int" value="50" />
+                
  	</node>
 
 

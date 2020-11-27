@@ -5,18 +5,20 @@
 	<arg name="base_frame_id"   default="heading"/>
 	<arg name="global_frame_id" default="map"/>
   	<arg name="odom_topic" default="odom" />
-	<arg name="laser_topic" default="/laser/right/scan"/>
+	<arg name="laser_topic" default="/laser/combined/scan"/>
 
-	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+	<node pkg="asr_move_base" type="move_base" respawn="false" name="move_base" output="screen">
 		<rosparam file="$(find kugle_navigation)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
 		<rosparam file="$(find kugle_navigation)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
 		<rosparam file="$(find kugle_navigation)/param/local_costmap_params.yaml" command="load" />
 		<rosparam file="$(find kugle_navigation)/param/global_costmap_params.yaml" command="load" />
 		<rosparam file="$(find kugle_navigation)/param/dwa_local_planner_params.yaml" command="load" />
+                <rosparam file="$(find kugle_navigation)/param/eband_local_planner_params.yaml" command="load" />
 		<rosparam file="$(find kugle_navigation)/param/move_base_params.yaml" command="load" />
 		<rosparam file="$(find kugle_navigation)/param/global_planner_params.yaml" command="load" />
 		<rosparam file="$(find kugle_navigation)/param/navfn_global_planner_params.yaml" command="load" />
 		<rosparam file="$(find kugle_navigation)/param/kugle_mpc_params.yaml" command="load" />
+                <rosparam file="$(find kugle_navigation)/param/asr_ftc_local_planner_params.yaml" command="load" />
 
 		<!-- reset frame_id parameters using user input data -->
 		<param name="global_costmap/global_frame" value="$(arg global_frame_id)"/>
@@ -25,8 +27,9 @@
 		<param name="local_costmap/robot_base_frame" value="$(arg base_frame_id)"/>
 		<param name="DWAPlannerROS/global_frame_id" value="$(arg odom_frame_id)"/>
 		<param name="KugleMPC/global_frame_id" value="$(arg odom_frame_id)"/>
+                <param name="ftc_local_planner/FTCPlanner" value="$(arg odom_frame_id)"/>
 
-		<param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/>
+		<param name="base_local_planner" value="ftc_local_planner/FTCPlanner"/>
 
 		<remap from="odom" to="$(arg odom_topic)"/>
 		<remap from="scan" to="$(arg laser_topic)"/>

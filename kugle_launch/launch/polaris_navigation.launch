@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+
+	<include file="$(find kugle_bringup)/launch/minimal.launch" />
+	<include file="$(find kugle_navigation)/launch/amcl.launch" />
+	<include file="$(find kugle_navigation)/launch/potential_field_planner.launch" />
+
+</launch>
