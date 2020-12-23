@@ -36,7 +36,7 @@ protected:
     switch (fsr_state)
     {
       case LookingFor::header:
-        if (incoming_byte == 0x00)
+        if (incoming_byte == 0x87)
         {
           incoming_data.push_back(incoming_byte);
           fsr_state = LookingFor::type;

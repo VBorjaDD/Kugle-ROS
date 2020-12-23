@@ -12,6 +12,8 @@
 #include <vector>
 #include <mutex>
 
+#include <iostream>
+
 #include <boost/asio.hpp>
 #include <boost/asio/read.hpp>
 #include <boost/asio/serial_port.hpp>
@@ -135,7 +137,7 @@ namespace lspc {
 
 		if (!controller_port.is_open()) return;
 
-		Flush();
+		//Flush();
 
 		boost::asio::async_read(
 				controller_port, boost::asio::buffer(read_buffer),
@@ -144,6 +146,7 @@ namespace lspc {
 
 		// Start the I/O service in its own thread.
 		ioservice_thread = std::thread([&] { ioservice.run(); });
+
 	}
 
 	bool Socket::isOpen() {

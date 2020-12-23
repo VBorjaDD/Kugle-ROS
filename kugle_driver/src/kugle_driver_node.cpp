@@ -1245,10 +1245,15 @@ void LSPC_Callback_SetParameterAck(const std::vector<uint8_t>& payload)
 
 bool ROS_Service_GetParameter(kugle_srvs::GetParameter::Request &req, kugle_srvs::GetParameter::Response &res, std::shared_ptr<std::timed_mutex> lspcMutex, std::shared_ptr<lspc::Socket *> lspcObj)
 {
-    if (!lspcMutex->try_lock_for(std::chrono::milliseconds(100))) return false; // could not get lock
+    if (!lspcMutex->try_lock_for(std::chrono::milliseconds(100))){
+        ROS_DEBUG("Could not get lock");
+        return false; // could not get lock
+    }
+      
 
     if (!(*lspcObj)->isOpen()) {
         lspcMutex->unlock();
+        ROS_DEBUG("Connection is not open");
         return false; // connection is not open
     }
 
@@ -1258,14 +1263,16 @@ bool ROS_Service_GetParameter(kugle_srvs::GetParameter::Request &req, kugle_srvs
     uint8_t arraySize;
     if (!ParseParamTypeAndID(req.type, req.param, msg.type, msg.param, valueType, arraySize)) {
         lspcMutex->unlock();
+        ROS_DEBUG("Parameters not found");
         return false; // parameter not found
     }
-
+    
     /* Send parameter request to embedded controller */
     GetParameterResponse.clear();
     std::vector<uint8_t> payloadPacked((uint8_t *)&msg, (uint8_t *)&msg+sizeof(msg));
     (*lspcObj)->send(lspc::MessageTypesFromPC::GetParameter, payloadPacked);
     lspcMutex->unlock();
+
 
     /* Wait for initial response */
     std::shared_ptr<std::vector<uint8_t>> response;
@@ -2033,7 +2040,7 @@ void LSPC_ConnectionThread(boost::shared_ptr<ros::NodeHandle> n, std::string ser
         /* Load parameters from board */
         (*lspcObj)->registerCallback(lspc::MessageTypesToPC::GetParameter, &LSPC_Callback_GetParameter);
         (*lspcObj)->registerCallback(lspc::MessageTypesToPC::SetParameterAck, &LSPC_Callback_SetParameterAck);
-        LoadParamsIntoReconfigure(lspcMutex, lspcObj);
+        //LoadParamsIntoReconfigure(lspcMutex, lspcObj);
 
         /* Register callbacks */
         (*lspcObj)->registerCallback(lspc::MessageTypesToPC::DumpParameters, &LSPC_Callback_DumpParameters);

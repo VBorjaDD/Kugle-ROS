@@ -97,7 +97,7 @@ void joystickCallback(const sensor_msgs::Joy::ConstPtr& msg)
     ReferenceTime = ros::Time::now();
     VelocityReference.x = maximum_linear_velocity * msg->axes[1]; // left stick Y
     VelocityReference.y = maximum_linear_velocity * msg->axes[0]; // left stick X
-    VelocityReference.yawVel = maximum_angular_velocity * msg->axes[2]; // right stick X
+    VelocityReference.yawVel = maximum_angular_velocity * msg->axes[3]; // right stick X
     RPYReference[0] = -maximum_angle_degree * msg->axes[0]; // left stick X
     RPYReference[1] = maximum_angle_degree * msg->axes[1]; // left stick Y
 

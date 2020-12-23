@@ -148,7 +148,7 @@ class Packet
     // Make space for the content plus header
     encoded_buffer_.resize(payload.size() + 4);
     // The package starts out with a 0x00
-    encoded_buffer_[0] = 0x00;
+    encoded_buffer_[0] = 0x87;
 
     // The type comes next. It can be 0x01-0xFF but not 0x00.
     packet_type_ = package_type;
